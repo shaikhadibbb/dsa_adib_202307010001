@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 100
+typedef struct node {
+int vertex;
+struct node* next;
+} Node;
+typedef struct {
+int n; 
+Node* adj[MAX]; 
+} Graph;
+void initializeGraph(Graph* g, int n) {
+g->n = n;
+for (int i = 0; i < n; i++) {
+g->adj[i] = NULL;
+}
+}
+void addEdge(Graph* g, int u, int v) {
+Node* newNode = (Node*)malloc(sizeof(Node));
+newNode->vertex = v;
+newNode->next = g->adj[u];
+g->adj[u] = newNode;
+}
+void printGraph(Graph* g) {
+for (int i = 0; i < g->n; i++) {
+printf("%d: ", i);
+Node* temp = g->adj[i];
+while (temp != NULL) {
+printf("%d -> ", temp->vertex);
+temp = temp->next;
+}
+printf("NULL\n");
+}
+}
+int main() {
+Graph g;
+initializeGraph(&g, 5);
+addEdge(&g, 0, 1);
+addEdge(&g, 0, 4);
+addEdge(&g, 1, 2);
+addEdge(&g, 1, 4);
+addEdge(&g, 2, 3);
+addEdge(&g, 3, 4);
+printGraph(&g);
+return 0;
+}
